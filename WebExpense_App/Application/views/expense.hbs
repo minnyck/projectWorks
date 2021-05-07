@@ -1,0 +1,58 @@
+
+<div class="row">
+    <div class="col-md-12">
+
+        <h2>{{viewData.user}} - Expense: {{viewData.description}}</h2>
+        <hr />
+
+        <form method="post" action="/expense/{{viewData._id}}/update">
+                    <fieldset>
+                        <legend>Expense Information</legend>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="date">Expense Date:</label>
+                                    <input class="form-control" id="date" name="date" type="date" value={{viewData.date}} />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="amount">Expense Amount:</label>
+                                    <input class="form-control" id="amount" name="amount" placeholder="0.00$" type="number" step="0.01" value={{viewData.amount}} />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                <label for="vendor">Vendor Name:</label>
+                                <input class="form-control" id="vendor" name="vendor" type="text" value={{viewData.vendor}} />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-9">
+                                <div class="form-group">
+                                <label for="description">Expense Description:</label>
+                                <input class="form-control" id="description" name="description" type="text" value={{viewData.description}} />
+                                </div>
+                            </div>
+                        </div>
+        
+                    </fieldset>
+<!--
+            <fieldset>
+                <legend>Other Information</legend>
+                    
+            </fieldset>
+        -->
+            <hr />
+            <input type="submit" class="btn btn-primary pull-right" value="Update Expense" /><br /><br /><br />
+        </form>
+
+    </div>
+</div>

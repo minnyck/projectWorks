@@ -1,0 +1,62 @@
+body {
+    background-color: #d0f2f0;
+    min-height: 500px;
+}
+
+a {
+    text-decoration: none;
+}
+
+div.link-hover:hover {
+    background-color: black;
+}
+
+.bg-accent-1 {
+    background-color: #d0f2f0;
+}
+
+.bg-accent-2 {
+    background-color: #7acec8;
+}
+
+.bg-accent-3 {
+    background-color: #2ea49c;
+}
+
+.accent-1 {
+  color: #d0f2f0;
+}
+
+.accent-2 {
+  color: #7acec8;
+}
+
+.accent-3 {
+  color: #2ea49c;
+}
+
+.text-white {
+  color:white;
+}
+
+/* Scrollbar Styling */
+/* Works on Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #2ea49c lightgray;
+  }
+  
+  /* Works on Chrome, Edge, and Safari */
+  *::-webkit-scrollbar {
+    width: 12px;
+  }
+  
+  *::-webkit-scrollbar-track {
+    background: lightgray;
+  }
+  
+  *::-webkit-scrollbar-thumb {
+    background-color: #2ea49c;
+    border-radius: 20px;
+    border: 3px solid lightgray;
+  }

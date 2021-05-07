@@ -1,0 +1,115 @@
+<div class="container">
+  <div class="row mt-4">
+    <div class="col-md-2"></div>
+
+    <div class="col-md-8 border text-white bg-accent-3 shadow p-4 m-2">
+
+      <h2 class="text-center">Create an account</h2>
+      <hr />
+      {{#if errorMessage}}
+      <div class="alert alert-danger">
+        <strong>Error:</strong>
+        {{errorMessage}}
+      </div>
+      {{/if}}
+
+
+      <form name="createUser" action="/register" method="POST">
+        <p class="mb-2">Username</p>
+        <div class="row">
+          <div class="col-md-11">
+            <div class="form-group">
+              <input class="form-control bg-accent-1" id="username" name="username" type="text" required minlength="3"
+                maxlength="15" value="" />
+            </div>
+          </div>
+          <div class="col-md-1">
+            <button type="button" class="btn btn-info" data-bs-toggle="tooltip" data-bs-placement="top"
+              title="Unique account identifier. 3-15 character length.">
+              ?
+            </button>
+          </div>
+
+        </div>
+        <p class="mb-2 mt-4">Email</p>
+        <div class="row">
+          <div class="col-md-11">
+            <div class="form-group">
+              <input class="form-control bg-accent-1" id="email" name="email" type="email" required
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" />
+            </div>
+          </div>
+          <div class="col-md-1">
+            <button type="button" class="btn btn-info" data-bs-toggle="tooltip" data-bs-placement="top"
+              title="Email to account. [name]@[domain]">
+              ?
+            </button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <p class="mb-2 mt-4">First name</p>
+            <div class="form-group">
+              <input class="form-control bg-accent-1" id="first_name" name="first_name" type="text" required value="" />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <p class="mb-2 mt-4">Last Name</p>
+            <div class="form-group">
+              <input class="form-control bg-accent-1" id="last_name" name="last_name" type="text" required value="" />
+            </div>
+          </div>
+        </div>
+
+        <p class="mb-2 mt-4">Password</p>
+        <div class="row">
+          <div class="col-md-11">
+            <div class="form-group">
+              <input class="form-control bg-accent-1" id="password" name="password" type="password" minlength="3"
+                maxlength="15" required />
+            </div>
+          </div>
+          <div class="col-md-1">
+            <button type="button" class="btn btn-info" data-bs-toggle="tooltip" data-bs-placement="top"
+              title="Account authenticator. 3-15 character length.">
+              ?
+            </button>
+          </div>
+        </div>
+        <p class="mb-2 mt-4">Password Confirmation</p>
+        <div class="row">
+          <div class="col-md-11">
+            <div class="form-group">
+              <input class="form-control bg-accent-1" id="passwordconfirm" name="passwordconfirm" type="password"
+                minlength="3" maxlength="15" required />
+            </div>
+          </div>
+          <div class="col-md-1">
+            <button type="button" class="btn btn-info" data-bs-toggle="tooltip" data-bs-placement="top"
+              title="Retype password for confirmation.">
+              ?
+            </button>
+          </div>
+        </div>
+
+        <br />
+
+        <input type="submit" class="btn btn-success pull-right" value="Register" />
+      </form>
+
+      <p class="m-2">Already have an account? Login <a href="/login">here</a></p>
+
+
+    </div>
+
+    <div class="col-md-2"></div>
+  </div>
+</div>
+
+<script>
+  var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+  var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl)
+  })
+</script>

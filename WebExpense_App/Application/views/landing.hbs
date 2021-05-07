@@ -1,0 +1,12 @@
+<h1>Welcome <span style="color:purple;">{{userSession.user.first_name}} {{userSession.user.last_name}}.</span></h1>
+<h3>Redirecting to the home page in a couple of seconds...</h3>
+<p>If you are not redirected click <a href="/">here</a></p>
+
+<script>
+
+    // window redirect
+    window.setTimeout(function () {
+        window.location.href = '/';
+    }, 5000);
+
+</script>

@@ -1,0 +1,179 @@
+<script src="/scripts/bills.js"></script>
+<link rel="stylesheet" href="/styles/bills.css">
+
+<body onload="init()">
+<div class="container">
+  {{#if errorMessage}}
+  <div class="alert alert-danger">
+    <strong>Error:</strong> {{errorMessage}}
+  </div>
+  {{else}}
+  <div class="row">
+
+    <div class="col-md-6">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3>Bill Control Panel</h3>
+        </div>
+
+        <div class="btn-group btn-group-justified">
+          <a href="#all" class="btn btn-primary">View All</a>
+          <a href="#filter" class="btn btn-primary">Filter Bills</a>
+          <a href="/bills/add" class="btn btn-primary">Add Bill</a>
+        </div>
+
+        <div class="panel-body">
+          <p>This is your control panel</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="panel panel-warning">
+        <div class="panel-heading">
+          {{#if upcomingBills}}
+          <p>You have some upcoming bills, here are the most recent</p>
+          {{else}}
+          <p>You have no upcoming bills.</p>
+          {{/if}}
+        </div>
+
+        <div class="panel-body">
+          <!-- if there are bills in this accounts -->
+
+          {{#each upcomingBills}}
+          <p>
+            <span class="glyphicon glyphicon-calendar"></span> Day: {{date}}
+            <span class="glyphicon glyphicon-piggy-bank"></span> ${{amount}}
+            <span class="glyphicon glyphicon-home"></span> {{vendor}}
+            {{description}}
+          </p>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="text-center">
+      <h2>All Monthly Bills</h2>
+    </div>
+  </div>
+
+  {{#if bills}}
+  <table class="table" id="all">
+    <thead>
+        <tr>
+        <th class="col-md-2 header" onclick="sort('date')">
+            Due Date
+        </th>
+        <th class="header" onclick="sort('amount')">
+            Amount&nbsp;Due
+        </th>
+        <th class="header" onclick="sort('vendor')">
+            Payee
+        </th>
+        <th>
+            Bill Description
+        </th>
+        <th>
+            Controls
+        </th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each bills}}
+        <tr>
+            <td class="td-date">
+                <span class="glyphicon glyphicon-calendar"></span> Date: {{date}}
+            </td>
+            <td class="td-amount">
+                <span class="glyphicon glyphicon-piggy-bank"></span> $: {{amount}}
+            </td>
+            <td class="td-vendor">
+                <span class="glyphicon glyphicon-home"></span> {{vendor}}
+            </td>
+            <td>
+                {{description}}
+            </td>
+            <td>
+                <div class="btn-group">
+                    <a href="/bills/view/{{_id}}" class="btn btn-info">Edit</a>
+                    <!-- <a href="#" class="btn btn-danger" data-toggle="modal" 
+                    data-target="#myModal">Delete</a> -->
+                    <a href="/bills/delete/{{_id}}" class="btn btn-danger">Delete</a>
+                </div>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+    </div>
+    </table>
+  {{else}}
+  <p>No scheduled bills!</p>
+  {{/if}}
+  <hr/>
+    <div class="row text-center">
+        <h2>Filter Bills</h2>
+    </div>
+    <div id="filter"></div>
+    <div class="row">
+        <div class="col-md-6 text-center">
+            <h3>Date Range</h3>
+            <form class="form-horizontal" onsubmit="filter()">
+            <div class="form-group">
+                        <label class="col-sm-4" for="date-from">From:</label>
+                        <div class="col-sm-8">
+                            <input type="number" id="date-from">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4" for="date-to">To:</label>
+                        <div class="col-sm-8">
+                            <input type="number" id="date-to">
+                        </div>
+                    </div>
+            </form>
+        </div>
+        <div class="col-md-6 text-center">
+            <h3>Payment Range</h3>
+            <form class="form-horizontal" onsubmit="filter()">
+            <div class="form-group">
+                        <label class="col-sm-4" for="amount-from">From:</label>
+                        <div class="col-sm-8">
+                            <input type="number" step="0.01" id="amount-from">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4" for="amount-to">To:</label>
+                        <div class="col-sm-8">
+                            <input type="number" step="0.01" id="amount-to">
+                        </div>
+                    </div>
+            </form>
+        </div>
+    </div>
+    <span><button class="btn btn-success" id="filter" onclick="filter()">Filter</button><a class="btn btn-default" id="clear" href="/bills">Clear</a></span>
+</div>
+{{/if}}
+<br>
+</body>
+<!-- Modal 
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Deletion Confirmation</h4>
+      </div>
+      <div class="modal-body">
+        You are about to delete this bill 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+-->

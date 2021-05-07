@@ -1,0 +1,270 @@
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+<script src="/scripts/expenses.js"></script>
+<script>
+    // Load the Visualization API and the corechart package.
+    google.charts.load('current', {'packages':['corechart']});
+
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.charts.setOnLoadCallback(drawChart);
+
+    // visualize the chart 
+    $(document).ready(() => {
+        //$("#visualize").submit(drawChart);
+        //drawChart();
+        dates = JSON.parse("{{dates}}".replaceAll("&quot;", "\""));
+        var sstart = "9999-12-31";
+        var send = "0000-01-01";
+        var total = 0;
+        for (date of dates) {
+            total += date.amount;
+        if (date.date < sstart) {
+            sstart = date.date;
+        }
+        if (date.date > send) {
+            send = date.date;
+        }
+        }
+        //console.log("Total amount: " + total);
+        document.getElementById("total").innerHTML = "$" + total.toFixed(2);
+        start = new Date(sstart);
+        end = new Date(send);
+    });
+    
+    // delete multiple rows
+    $(function(){
+        $(".deleteRows").click(function(e){
+            e.preventDefault();
+            var arr_id = [];
+            var id_lst = [];
+            var id_string = "";
+            var user = document.getElementById("username").innerHTML;
+       
+            $(":checkbox:checked").each(function(i){
+               arr_id[i] = $(this).val();
+               id_lst[i] = $(this).closest("tr").find('td.td-id').text();
+    
+            });
+         
+
+            if(id_lst.length == 0){
+                alert("at least check one row");
+            }
+            else{
+        
+                for(var i = 0; i < id_lst.length; i++){
+                    (function(index){
+                        $.ajax({
+                            type: "GET",
+                            dataType: "application/json",
+                            url: "/expenses/" + id_lst[index] + "/delete",
+                            cache: false,
+                            async: false,
+                            success: function(res){
+                               window.location.href= "/expenses";
+                            },
+                            error: function(res){
+                               
+                                window.location.href= "/expenses"
+                            }
+                        });
+                    }) (i);
+                    
+                }
+                
+            }
+
+        });
+    });
+    
+// Draw a chart i guess idk
+function drawChart(event) {
+    var data = new google.visualization.DataTable();
+    //var start = new Date(document.getElementById("from").value);
+    //var end = new Date(document.getElementById("to").value);
+    var current = new Date(start);
+    var cstr;
+    var total;
+
+    var rows = [];
+
+    while (current <= end) {
+        cstr = current.toISOString().substr(0, 10);
+        total = 0.0;
+        for (d of dates) {
+            if (d.date == cstr) {
+                total += d.amount;
+            }
+        }
+        rows.push([cstr, total]);
+        current.setDate(current.getDate() + 1);
+    }
+
+    data.addColumn('string', 'date');
+    data.addColumn('number', 'Daily spending');
+    data.addRows(rows);
+
+    let title;
+    var sstring = start.toISOString().substr(0, 10);
+    var estring = end.toISOString().substr(0, 10);
+    if (sstring == "9999-12-31") {
+        title = "No expenses found for selected period";
+    } else {
+        title = 'Daily expenses between ' + start.toISOString().substr(0, 10) + ' and ' + end.toISOString().substr(0, 10);
+    }
+
+    // Set chart options
+    var options = {'title': title,
+                'width':500,
+                'height':250};
+
+    // Instantiate and draw our chart, passing in some options.
+    var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+    chart.draw(data, options);
+}
+</script>
+<link rel="stylesheet" href="/styles/expenses.css">
+
+<body onload="init()">
+    {{#if joint}}
+        <p>This is a joint account</p>
+    {{else}}
+        <p>{{joint}}</p>
+    {{/if}}
+    <div class="row">
+        <div class="col-md-12">
+            <p  id=username style="display:none;">{{username}}</p>
+            {{#if userSession.joint}}
+            <h2>Joint expenses for {{userSession.user.first_name}}&nbsp;{{userSession.user.last_name}} and {{userSession.joint}}</h2>
+            {{else}}
+            <h2>Expenses for {{userSession.user.first_name}}&nbsp;{{userSession.user.last_name}}</h2>
+            {{/if}}
+            <a href="/expenses/add" class="btn btn-success pull-right">Add New Expense</a>
+            <hr>
+            <!--
+        {{#each employees}}
+        <p>{{firstName}} {{lastName}}</p>
+        {{else}}
+        <p>{{message}}</p>
+        {{/each}} 
+        -->
+    </div>
+            <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th style="display:none;">ID</th>
+                        <th>Select</th>
+                        <th class="header" onclick="sort('date')">Date</th>
+                        <th class="header" onclick="sort('amount')">Amount</th>
+                        <th>Vendor</th>
+                        <th>Description</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                {{#each expense}}
+                <tr>
+                    <td style="display:none;" class="td-id">{{_id}}</td>
+                    <td><input type="checkbox" /> </td>
+                    <td class="td-date">{{date}}</td>
+                    <td class="td-amount">${{amount}}</td>
+                    <td>{{vendor}}</td>
+                    <td><a href="/expense/{{_id}}">{{description}}</a></td>
+                    <td><a href="/expenses/{{_id}}/delete" class="btn btn-danger pull-right" style="background-color:red">Remove</a>
+                    </td>
+                </tr>
+                {{else}}
+                <div class="col-md-12 text-center">
+                    <strong>No expenses found for selected period.</strong>
+                </div>
+                {{/each}}
+                <tr>
+                    <th>TOTAL</th>
+                    <th id="total">$</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </tbody>
+            </table>
+            <input type="button" value="Delete Selected Rows" class="deleteRows" />
+            </div>
+            {{#if errorMessage}}
+                <div class="alert alert-danger">
+                <strong>Error:</strong> {{errorMessage}}
+                </div>
+            {{/if}}
+        </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <hr>
+                    <div class="col-sm-3">
+                        <form class="form-horizontal" id="filter" onsubmit="filter()">
+                            <h3>Filter by year</h3>
+                            <div class="form-group">
+                                <label class="col-sm-4" for="from">Year:</label>
+                                <div class="col-sm-8">
+                                    <input type="number" id="year" value="2021">
+                                </div>
+                            </div>
+                            <h3>Filter by month</h3>
+                            <div class="form-group">
+                                <label class="col-sm-4" for="from">Month:</label>
+                                <div class="col-sm-8">
+                                    <select id="month">
+                                    <option></option>
+                                    <option>January</option>
+                                    <option>February</option>
+                                    <option>March</option>
+                                    <option>April</option>
+                                    <option>May</option>
+                                    <option>June</option>
+                                    <option>July</option>
+                                    <option>August</option>
+                                    <option>September</option>
+                                    <option>October</option>
+                                    <option>November</option>
+                                    <option>December</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-offset-4 col-sm-8">
+                                <a href="#" class="btn btn-success" onclick="filter()">Filter</a>
+                                <a href="/expenses" class="btn btn-default">Reset</a>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-sm-3">
+                        <form class="form-horizontal" id="filter" onsubmit="filter()">
+                            <h3>Filter by date range</h3>
+                            <div class="form-group">
+                                <label class="col-sm-4" for="from">Date from:</label>
+                                <div class="col-sm-8">
+                                    <input type="date" id="from">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4" for="to">Date to:</label>
+                                <div class="col-sm-8">
+                                    <input type="date" id="to">
+                                </div>
+                            </div>
+                            <div class="col-sm-offset-4 col-sm-8">
+                                <a href="#" class="btn btn-success" onclick="filter()">Filter</a>
+                                <a href="/expenses" class="btn btn-default">Reset</a>
+                            </div>
+                        </form>
+                        <br>
+                    </div>
+                    <div class="col-sm-6" id="chart_div"></div>
+                    <br>
+                </div>
+                <br>
+            </div>
+        </div>
+    </div>
+</body>

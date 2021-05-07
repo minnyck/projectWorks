@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+
+      <h2>Add Bill</h2>
+      <hr />
+      {{#if errorMessage}}
+      <div class="alert alert-danger">
+        <strong>Error:</strong>
+        {{errorMessage}}
+      </div>
+      {{/if}}
+
+      <form name="createBill" method="POST" action="/bills/add">
+        <div class="row">
+          <div class="form-group">
+            <input class="form-control" id="date" name="date" type="date" placeholder="Date" required />
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group">
+            <input class="form-control" id="amount" name="amount" type="number" min="0" max="99999.99" step=".01" placeholder="Amount" required />
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group">
+            <input class="form-control" id="vendor" name="vendor" type="text" placeholder="Vendor Name" required />
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group">
+            <textarea id="description" name="description" cols="100%" placeholder="Enter a short summary of this bill payment here."></textarea>
+          </div>
+        </div>
+
+        <input type="submit" class="btn btn-success pull-right" value="Add" />
+      </form>
+
+    </div>
+  </div>
+</div>

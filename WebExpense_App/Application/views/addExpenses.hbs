@@ -1,0 +1,127 @@
+<style>
+        .navbar-default .navbar-brand{
+          color: purple;
+          font-weight:bold;
+          font-size: 20px;
+        }
+
+        .navbar-default .navbar-nav li a {
+          color: purple;
+        }
+
+         .navbar-default .navbar-nav li.active a,
+         .navbar-default .navbar-nav li:hover a {
+           background-color:  #5c005c;
+           color:#DCDCDC;
+         }
+
+        .navbar-default .navbar-right a.btn-success{
+          background-color: 	 #9932CC;
+          border:		#9370DB;
+        }
+        .navbar-default .navbar-right a.btn-primary{
+          background-color:  #5c005c;
+          border:	#9370DB;
+        }
+        .pull-right{
+          background-color: 	 #066940;
+          border:		#067e60;
+        }
+        .pull-right:hover, .pull-right:active, .pull-right:visited, .pull-right:focus{
+          background-color: 	 #066940;
+          border:		#067e60;
+        }
+
+        .container{
+            padding-right:10%;
+            padding-left: 10%;
+        }
+        h2{
+          color: black;
+          font-weight:bold;
+        }
+
+
+
+        legend {
+            font-weight:bold;
+        }
+      </style>
+
+
+ <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+        
+                <h2>Add Expense for User {{username}}</h2>
+
+                <br />
+        
+                <form method="post" action="/expenses/add">
+        
+                    <fieldset>
+                        <legend>Expense Information</legend>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="date">Expense Date:</label>
+                                    <input class="form-control" id="date" name="date" type="date" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="amount">Expense Amount:</label>
+                                    <input class="form-control" id="amount" name="amount" placeholder="0.00$" type="number" step="0.01" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                <label for="vendor">Vendor Name:</label>
+                                <input class="form-control" id="vendor" name="vendor" type="text" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-9">
+                                <div class="form-group">
+                                <label for="description">Expense Description:</label>
+                                <input class="form-control" id="description" name="description" type="text" />
+                                </div>
+                            </div>
+                        </div>
+<!--
+                <form method="post" action="/images/add" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="firstName">Image File:</label>
+                                <input class="form-control" id="imageFile" name="imageFile" type="file" />
+                            </div>
+                        </div>
+                    </div>
+
+                <hr />
+    
+               <input type="submit" class="btn btn-primary pull-right" value="Add Image" /><br /><br /><br />
+    
+            </form>
+-->
+
+
+        
+                    </fieldset>
+                    <hr />
+
+
+                    <input type="submit" class="btn btn-primary pull-right" value="Add Expense" /><br /><br /><br />
+        
+                </form>
+            </div>
+        </div>
+    </div>

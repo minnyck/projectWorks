@@ -1,0 +1,25 @@
+.header:hover {
+    background-color: black;
+    color: white;
+    cursor: pointer;
+}
+
+.td-sorted {
+    color: white;
+    background-color: black !important;
+    font-weight: 500;
+}
+
+#filter {
+    margin: auto;
+    position: absolute;
+    left: 48%;
+}
+
+h3 {
+    margin-bottom: 12px;
+}
+
+body {
+    padding-bottom: 40px;
+}

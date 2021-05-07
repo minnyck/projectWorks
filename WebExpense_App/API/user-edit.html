@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Personal Expense Manager Web API</title>
+</head>
+
+<body>
+    <h1>Personal Expense App</h1>
+
+    <h3>Edit</h3>
+    <form name="editUser" onsubmit="return validateForm()" method="PUT">
+        <table style="border: 1px dashed #cdcdcd;padding:6px;">
+            <tbody>
+                <tr>
+                    <td><label for="_id">UserId:</label></td>
+                    <td><input style="width:100%" name="_id" type="text" placeholder="Id of edited user" /></td>
+                </tr>
+                <tr>
+                    <td><label for="username">Choose a username:</label></td>
+                    <td><input style="width:100%" name="username" type="text" placeholder="Username" /></td>
+                </tr>
+                <tr>
+                    <td><label for="name">Your First Name:</label></td>
+                    <td><input style="width:100%" name="first_name" type="text" placeholder="Your name" /></td>
+                </tr>
+                <tr>
+                    <td><label for="name">Your Last Name:</label></td>
+                    <td><input style="width:100%" name="last_name" type="text" placeholder="Your name" /></td>
+                </tr>
+                <tr>
+                    <td><label for="email">Your Email:</label></td>
+                    <td><input style="width:100%" name="email" type="text" placeholder="Email address" />
+                </tr>
+                <tr>
+                    <td><label for="password">Your Password:</label></td>
+                    <td><input style="width:100%" name="password" type="password" /></td>
+                </tr>
+                <tr>
+                    <td><label for="passwordconfirm">Confirm Password:</label></td>
+                    <td><input style="width:100%" name="passwordconfirm" type="password" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><input type="submit" value="Submit" /></td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+    <script>
+        function validateForm() {
+            var _id = document.forms["editUser"]["_id"].value;
+            var name = document.forms["editUser"]["username"].value;
+            var fName = document.forms["editUser"]["first_name"].value;
+            var lName = document.forms["editUser"]["last_name"].value;
+            var email = document.forms["editUser"]["email"].value;
+            var pass = document.forms["editUser"]["password"].value;
+            var passConf = document.forms["editUser"]["passwordconfirm"].value;
+
+            if (_id == "") {
+                alert("Please enter the Id of the user being edited.");
+                return false;
+            }
+            
+            if (name == "") {
+                alert("Username must be filled out");
+                return false;
+            }
+
+            if (fName == "") {
+                alert("First name must be filled out");
+                return false;
+            }
+
+            if (lName == "") {
+                alert("Last name must be filled out");
+                return false;
+            }
+
+            if (email == "") {
+                alert("Email must be filled out");
+                return false;
+            }
+
+            if (pass == "") {
+                alert("Password must be filled out");
+                return false;
+            }
+
+            if (passConf == "") {
+                alert("Password confirmation must be filled out");
+                return false;
+            }
+
+            if (pass != passConf) {
+                alert("Passwords don't match.");
+                return false;
+            }
+            
+            var action_src = "/api/users/" + _id;
+            console.log(action_src);
+            document.getElementById("editUser").action = action_src;
+        }
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,171 @@
+<div class="container">
+    <div class="row mt-4">
+        <div class="col-md-2"></div>
+
+        <div class="col-md-8 border text-white bg-accent-3 shadow p-4 m-2">
+
+            <h1>Hello <span class="accent-1">{{userSession.user.userName}}.</span></h1>
+
+            <hr />
+
+            <div class="row">
+                <div class="col-md-3">
+                    <h3>Personal Info:</h3>
+                </div>
+                <div class="col-md-9">
+                    <h3>First Name: <span class="accent-1">{{userSession.user.first_name}}</span></h3>
+                    <h3>Last Name: <span class="accent-1">{{userSession.user.last_name}}</span></h3>
+                    <h3>Email: <span class="accent-1">{{#each userSession.user.email}}- {{this}} {{/each}}-</span>
+                    </h3>
+                    <!--<input class="btn btn-info pull-right" type="submit" value="Edit Info">-->
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="row">
+
+                {{#if successMessagePass}}
+                <div class="alert alert-success">
+                    <strong>Success:</strong> {{successMessagePass}}
+                </div>
+                {{/if}}
+
+                {{#if errorMessagePass}}
+                <div class="alert alert-danger">
+                    <strong>Error:</strong> {{errorMessagePass}}
+                </div>
+                {{/if}}
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <h3>Security:</h3>
+                    <button type="button" class="btn btn-info" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                        title="Enter old and new information to change the account password.">
+                        ?
+                    </button>
+                </div>
+                <div class="col-md-9">
+                    <form name="editPass" method="POST" action="/profile">
+                        <p class="mb-2">Old password</p>
+                        <div class="form-group">
+                            <input class="form-control bg-accent-1" type="password" name="oldPass1" id="oldPass1"
+                                placeholder="{{userSession.user.password}}" required>
+                        </div>
+                        <p class="mb-2 mt-2">New password</p>
+                        <div class="form-group">
+                            <input class="form-control bg-accent-1" type="password" name="newPass" id="newPass"
+                                required>
+                        </div>
+                        <p class="mb-2 mt-2">New password confirmation</p>
+                        <div class="form-group">
+                            <input class="form-control bg-accent-1" type="password" name="newPassConf" id="newPassConf"
+                                required>
+                        </div>
+                        <input class="btn btn-info pull-right mt-4" type="submit" value="Edit Password">
+                    </form>
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="row">
+
+                {{#if successMessageEmail}}
+                <div class="alert alert-success">
+                    <strong>Success:</strong> {{successMessageEmail}}
+                </div>
+                {{/if}}
+
+                {{#if errorMessageEmail}}
+                <div class="alert alert-danger">
+                    <strong>Error:</strong> {{errorMessageEmail}}
+                </div>
+                {{/if}}
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <h3>Joint Accounts:</h3>
+                    <button type="button" class="btn btn-info" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                        title="Add a joint account to share finances with an existing user.">
+                        ?
+                    </button>
+                </div>
+                <div class="col-md-9">
+                    <div class="row" id="joint">
+                        <h3>Current joint accounts:</h3>
+                        <ul>
+                            {{#each joints}}
+                                <li>{{first_name}}&nbsp;{{last_name}}
+                                {{#if active}}
+                                <span>(currently active)</span>
+                                {{else}}
+                                <span>
+                                <form method="POST" action="/joint/switch">
+                                    <input name="joint" value="{{username}}" hidden>
+                                    <input type="submit" class="btn btn-success" value="Activate Account">
+                                </form>
+                                </span>
+                                <span></span>
+                                <a href="/joint/delete/{{username}}" class="btn btn-danger">Close Account</a>
+                                </span>
+                                {{/if}}
+                                </li>
+                            </div>
+                        {{else}}
+                            <p>No joint accounts! Add one below.</p>
+                        {{/each}}
+                        {{#if userSession.joint}}
+                        <form method="POST" action="/joint/switch">
+                            <input type="submit" class="btn btn-success" value="Switch to Personal Account">
+                        </form>
+                        {{/if}}
+                        </ul>
+                    </div>
+                    <div class="row">
+                        <h3>Add joint account:</h3>
+                        <form name="addJoint" method="POST" action="/joint">
+                            <div class="form-group">
+                                <label for="email">Joint User Email</label>
+                                <input class="form-control bg-accent-1" type="text" name="email" id="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Joint User Password</label>
+                                <input class="form-control bg-accent-1" type="password" name="password" id="password"
+                                    required>
+                            </div>
+                            {{#if errorMessage}}
+                                <div class="alert alert-danger">
+                                <strong>Error:</strong> {{errorMessage}}
+                                </div>
+                            {{/if}}
+                            <input class="btn btn-info" type="submit" value="Add Joint Account" style="margin-top: 4px">
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="row">
+                <form action="/logout">
+                    <input class="btn btn-danger pull-right" type="submit" value="Logout">
+                </form>
+            </div>
+
+        </div>
+
+        <div class="col-md-2"></div>
+    </div>
+</div>
+
+<script>
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+</script>

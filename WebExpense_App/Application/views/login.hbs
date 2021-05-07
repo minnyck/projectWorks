@@ -1,0 +1,53 @@
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+</head>
+
+<body>
+   <div class="container">
+    <div class="row mt-4"><!-- row start -->
+      <div class="col-md-2"></div><!-- empty spacing -->
+
+      <div class="col-md-8 border text-white bg-accent-3 shadow p-4 m-2">
+        <h2 class="text-center">Welcome back</h2>
+        <p class="text-center">So glad to see you again!</p>
+
+        {{#if errorMessage}}
+        <div class="alert alert-danger">
+          <strong>Error:</strong> {{errorMessage}}
+        </div>
+        {{/if}}
+
+        {{#if result}}
+        <div class="alert alert-success">
+          <strong>Registration Successful</strong> {{errorMessage}}
+        </div>
+        {{/if}}
+
+        {{!-- <form name="login" action="redirect"> --}}
+        <form name="login" method="POST" action="/login">
+              <p class="mb-2">Email</p>
+              <div class="form-group">
+                <input class="form-control bg-accent-1" type="text" name="email" id="email" required>
+              </div>
+              <p class="mb-2 mt-4">Password</p>
+              <div class="form-group">
+                <input class="form-control bg-accent-1" type="password" name="password" id="password"
+                  required>
+              </div>
+          <input class="btn btn-success pull-right mt-4" type="submit" value="Login">
+        </form>
+
+        <p class="m-2">Don't have an account? Register <a href="/register">here</a></p>
+
+      </div>
+
+      <div class="col-md-2"></div><!-- empty spacing -->
+
+    </div> <!-- row end -->
+  </div>
+</body>
+
+</html>

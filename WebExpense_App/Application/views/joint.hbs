@@ -1,0 +1,73 @@
+<head>
+    <script>
+        function isActive(username) {
+            if (username == "{{userSession.joint}}") {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    </script>
+</head>
+<h1>Your Joint Accounts</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <h3>Current Joint Accounts:</h3>
+        </div>
+        <div class="col-md-9">
+            {{#each joints}}
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Joint account with {{first_name}}&nbsp;{{last_name}}</h4>
+                    </div>
+                    {{#if active}}
+                    <h4>Currently Active</h4>
+                    {{else}}
+                    <form method="POST" action="/joint/switch">
+                        <input name="joint" value="{{username}}" hidden>
+                        <div class="col-md-2">
+                            <input type="submit" class="btn btn-success" value="Activate Account">
+                        </div>
+                    </form>
+                    <div class="col-md-2">
+                        <a href="/joint/delete/{{username}}" class="btn btn-danger">Close Account</a>
+                    </div>
+                    {{/if}}
+                </div>
+            {{else}}
+                <h3>No joint accounts! Add one below.</h3>
+            {{/each}}
+            {{#if userSession.joint}}
+            <form method="POST" action="/joint/switch">
+                <input type="submit" class="btn btn-success" value="Switch to Personal Account">
+            </form>
+            {{/if}}
+        </div>
+    </div>
+    <hr/>
+    <div id="joint" class="row">
+        <div class="col-md-3">
+            <h3>Add Joint Account:</h3>
+        </div>
+        <div class="col-md-9">
+            <form name="addJoint" method="POST" action="/joint">
+                <div class="form-group">
+                    <label for="email">Joint User Email</label>
+                    <input class="form-control" type="text" name="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Joint User Password</label>
+                    <input class="form-control" type="password" name="password" id="password"
+                        required>
+                </div>
+                {{#if errorMessage}}
+                    <div class="alert alert-danger">
+                    <strong>Error:</strong> {{errorMessage}}
+                    </div>
+                {{/if}}
+                <input class="btn btn-info" type="submit" value="Add Joint Account">
+            </form>
+        </div>
+    </div>
+</div>

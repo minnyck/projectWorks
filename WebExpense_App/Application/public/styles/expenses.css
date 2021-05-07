@@ -1,0 +1,56 @@
+/*
+.navbar-default .navbar-brand {
+    color: purple;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.navbar-default .navbar-nav li a {
+    color: purple;
+}
+
+.navbar-default .navbar-nav li.active a,
+.navbar-default .navbar-nav li:hover a {
+    background-color: #5c005c;
+    color: #DCDCDC;
+}
+
+.navbar-default .navbar-right a.btn-success {
+    background-color: #9932CC;
+    border: #9370DB;
+}
+
+.navbar-default .navbar-right a.btn-primary {
+    background-color: #5c005c;
+    border: #9370DB;
+}
+
+.pull-right {
+    background-color: #9932CC;
+    border: #9370DB;
+}
+
+.pull-right:hover,
+.pull-right:active,
+.pull-right:visited,
+.pull-right:focus {
+    background-color: #9932CC;
+    border: #9370DB;
+}
+
+h2 {
+    color: #5c005c;
+    font-weight: bold;
+}
+*/
+.td-sorted {
+    background-color: black !important;
+    color: white;
+    font-weight: 500;
+}
+
+.header:hover {
+    cursor: pointer;
+    color: white;
+    background-color: black;
+}

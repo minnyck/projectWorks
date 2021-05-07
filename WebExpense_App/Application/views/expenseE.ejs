@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+  <style>
+    img {
+      width: 100%;
+    }
+
+    head {
+      padding: 750px;
+    }
+
+    body {
+      padding: 75px;
+    }
+    .pull-right{
+      background-color:  #066940;
+      border:		#067e60;
+    }
+    .pull-right:hover, .pull-right:active, .pull-right:visited, .pull-right:focus{
+      background-color:  #054128;
+      border:		#067e60;
+    }
+    #title-img {
+      font-size: 30px;
+     
+    }
+
+    .btn-btn-primarybtn-block {
+      background-color:  #066940;
+      color: white;
+    }
+  </style>
+  <title>Individual expenses</title>
+</head>
+
+
+<div class="row">
+    <div class="col-md-12">
+
+        <h2><%= viewData.user %> - Expense: <%= viewData.description %> </h2>
+        <hr />
+
+        <form method="post" action="/expense/<%= viewData._id %>/update">
+                    <fieldset>
+                        <legend>Expense Information</legend>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="date">Expense Date:</label>
+                                    <input class="form-control" id="date" name="date" type="date" value="<%= viewData.date %>"  />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="amount">Expense Amount:</label>
+                                    <input class="form-control" id="amount" name="amount" placeholder="0.00$" type="number" step="0.01" value="<%= viewData.amount %>"  />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                <label for="vendor">Vendor Name:</label>
+                                <input class="form-control" id="vendor" name="vendor" type="text" value="<%= viewData.vendor %>" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-9">
+                                <div class="form-group">
+                                <label for="description">Expense Description:</label>
+                                <input class="form-control" id="description" name="description" type="text" value="<%= viewData.description %>"  />
+                                </div>
+                            </div>
+                        </div>
+        
+                    </fieldset>
+
+
+            <br />
+            <input type="submit" class="btn btn-primary pull-right" value="Update Expense" /><br /><br /><br />
+        </form>
+
+        <div class="container">
+            <div class="row">
+              <div class="col-md-6 m-auto">
+               <h2 id="title-img" class="text-center display-4 my-4">Expense Images</h2>
+               <form action="/upload/<%= viewData._id %>" method="POST" enctype="multipart/form-data">
+                   <div class = "custom-file mb-3">
+                       <input type="file" name="file" id="file" class="custom-file-input">
+       
+                   </div>
+                   <input type="submit" value="submit" class="btn btn-btn-primarybtn-block" />
+               </form>
+               <hr>
+               <% if(files){ %>
+                <% files.forEach(function(file) { %>
+                    <% if(file.isExp) { %>
+                    <div class = "card card-body mb-3">
+                      <% if(file.isImage) { %>
+                        <img src="/image/<%= file.filename %>" alt="">
+                      <% } else { %>
+                        <%= file.filename %>
+                      <% } %>
+                      <form method="POST" action="/files/<%= viewData._id %>/<%= file._id %>?_method=DELETE">
+                        <button class="btn btn-danger btn-block mt-4">Delete</button>
+                      </form>
+                    </div>
+                    <% } %>
+                <% }) %>
+                     <% } else { %>
+                        <p> No files to show</p>
+                        <% } %>
+               
+       
+            </div>
+          </div>
+
+    </div>
