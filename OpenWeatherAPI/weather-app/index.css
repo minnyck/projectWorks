@@ -1,0 +1,41 @@
+h1 {
+    padding: 15px;
+    text-align: center;
+    background-color: white;
+    color: #fd6a02;
+    font-family: sans-serif;
+}
+
+form {
+    padding: 30px;
+    background-color: orange;
+    text-align: center;
+}
+
+#searchWords {
+    width: 300px;
+}
+
+
+#resultsList {
+    padding:10px;
+    list-style-type: none;
+}
+
+#resultsList li {
+    padding: 10px;
+}
+
+.pagination {
+    display:inline-block;
+
+}
+
+.pagination a {
+    float: left;
+    color: black;
+    background-color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+    border: 1px solid #ddd;
+}
