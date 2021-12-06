@@ -6,6 +6,8 @@ Expense managing Application
 features include:
 - managing lists of expenses
 - managing bill dates
+- Database: mongoDB
+- Deployed via Heroku
 Deployed link: https://intense-brushlands-59228.herokuapp.com/
 
 
